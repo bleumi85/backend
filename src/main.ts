@@ -8,8 +8,13 @@ import { setupSwagger } from './utils';
 
 const corsLogger = new Logger('CORS');
 
-const whiteList = [];
-const regexList = [];
+const whiteList = [
+    'https://graftipp.online',
+];
+const regexList = [
+    /localhost:\d+$/,
+    /\d{3}\.\d{3}\.\d{3}\.\d{3}:\d{4}$/,
+];
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
