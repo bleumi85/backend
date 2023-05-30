@@ -1,9 +1,10 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
 import { NODE_ENV } from './common/constants';
+import { setupSwagger } from './utils';
 
 const corsLogger = new Logger('CORS');
 
@@ -16,6 +17,7 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
     const PORT = configService.get<number>('port');
     const CURRENT_NODE_ENV = configService.get<string>('node_env');
+    const showSwagger = configService.get<boolean>('show_swagger');
 
     app.enableCors({
         credentials: true,
@@ -38,6 +40,11 @@ async function bootstrap() {
 
     app.use(cookieParser());
     app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+
+    if (CURRENT_NODE_ENV === NODE_ENV.DEVELOPMENT || showSwagger) {
+        Logger.log('Setup', 'Swagger');
+        setupSwagger(app);
+    }
 
     await app.listen(PORT, () => {
         switch (CURRENT_NODE_ENV) {
