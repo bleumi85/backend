@@ -1,5 +1,6 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { NODE_ENV } from './common/constants';
@@ -34,6 +35,9 @@ async function bootstrap() {
             }
         },
     });
+
+    app.use(cookieParser());
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
     await app.listen(PORT, () => {
         switch (CURRENT_NODE_ENV) {
