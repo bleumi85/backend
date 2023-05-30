@@ -5,5 +5,5 @@ export const configuration = () => ({
         secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_EXPIRES_IN,
     },
-    show_swagger: process.env.SWAGGER_SHOW,
+    show_swagger: Boolean(JSON.parse(process.env.SWAGGER_SHOW)),
 });
