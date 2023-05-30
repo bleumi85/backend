@@ -1,8 +1,9 @@
-import { Collection, Entity, EntityRepositoryType, ManyToMany, Property } from '@mikro-orm/core';
+import { Collection, Entity, EntityRepositoryType, ManyToMany, OneToMany, Property } from '@mikro-orm/core';
 import { PrimaryEntity } from '../../../common/entities';
 import { SeasonsRepository } from '../seasons.repository';
 import { Account } from '../../accounts/entities';
 import { ApiProperty } from '@nestjs/swagger';
+import { Payment } from '../../payments/entities';
 
 @Entity({ tableName: 'seasons', customRepository: () => SeasonsRepository })
 export class Season extends PrimaryEntity {
@@ -19,9 +20,12 @@ export class Season extends PrimaryEntity {
     @Property({ persist: false })
     @ApiProperty({ type: 'string' })
     get description() {
-        return `1. Bundesliga Saison ${this.year}/${(this.year % 100) + 1}`
+        return `1. Bundesliga Saison ${this.year}/${(this.year % 100) + 1}`;
     }
 
     @ManyToMany(() => Account, (account) => account.seasons)
     accounts = new Collection<Account>(this);
+
+    @OneToMany(() => Payment, (p) => p.season)
+    payments = new Collection<Payment>(this);
 }

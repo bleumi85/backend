@@ -9,30 +9,30 @@ const name = 'seasons';
 @Controller(name)
 @ApiTags(name)
 export class SeasonsController {
-  constructor(private readonly seasonsService: SeasonsService) {}
+    constructor(private readonly seasonsService: SeasonsService) {}
 
-  @Post()
-  create(@Body() createSeasonDto: CreateSeasonDto) {
-    return this.seasonsService.create(createSeasonDto);
-  }
+    @Post()
+    create(@Body() createSeasonDto: CreateSeasonDto) {
+        return this.seasonsService.create(createSeasonDto);
+    }
 
-  @Get()
-  findAll() {
-    return this.seasonsService.findAll();
-  }
+    @Get()
+    findAll() {
+        return this.seasonsService.findAll();
+    }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.seasonsService.findOne(+id);
-  }
+    @Get(':id')
+    findOne(@Param('id') id: string) {
+        return this.seasonsService.findOne(+id);
+    }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSeasonDto: UpdateSeasonDto) {
-    return this.seasonsService.update(+id, updateSeasonDto);
-  }
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() updateSeasonDto: UpdateSeasonDto) {
+        return this.seasonsService.update(+id, updateSeasonDto);
+    }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.seasonsService.remove(+id);
-  }
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        return this.seasonsService.remove(+id);
+    }
 }

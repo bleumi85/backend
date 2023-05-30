@@ -5,6 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../accounts.interface';
 import { RefreshToken } from '../../refresh-tokens/entities';
 import { Season } from '../../seasons/entities';
+import { Payment } from '../../payments/entities';
 
 @Entity({ tableName: 'accounts', customRepository: () => AccountsRepository })
 @Unique({ properties: ['firstName', 'lastName'], name: 'accounts_full_name_unique' })
@@ -66,6 +67,9 @@ export class Account extends DateEntity {
     @OneToMany(() => RefreshToken, (rt) => rt.account, { hidden: true, cascade: [Cascade.REMOVE] })
     refreshTokens = new Collection<RefreshToken>(this);
 
-    @ManyToMany(() => Season, 'accounts', { owner: true, orderBy: { 'year': 'DESC' } })
+    @ManyToMany(() => Season, 'accounts', { owner: true, orderBy: { year: 'DESC' } })
     seasons = new Collection<Season>(this);
+
+    @OneToMany(() => Payment, (p) => p.account)
+    payments = new Collection<Payment>(this);
 }
