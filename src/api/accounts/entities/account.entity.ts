@@ -1,11 +1,13 @@
-import { Cascade, Collection, Entity, EntityRepositoryType, Enum, OneToMany, Property, Unique } from '@mikro-orm/core';
+import { Cascade, Collection, Entity, EntityRepositoryType, Enum, ManyToMany, OneToMany, Property, Unique } from '@mikro-orm/core';
 import { DateEntity } from '../../../common/entities';
 import { AccountsRepository } from '../accounts.repository';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../accounts.interface';
 import { RefreshToken } from '../../refresh-tokens/entities';
+import { Season } from '../../seasons/entities';
 
 @Entity({ tableName: 'accounts', customRepository: () => AccountsRepository })
+@Unique({ properties: ['firstName', 'lastName'], name: 'accounts_full_name_unique' })
 export class Account extends DateEntity {
     [EntityRepositoryType]?: AccountsRepository;
 
@@ -63,4 +65,7 @@ export class Account extends DateEntity {
 
     @OneToMany(() => RefreshToken, (rt) => rt.account, { hidden: true, cascade: [Cascade.REMOVE] })
     refreshTokens = new Collection<RefreshToken>(this);
+
+    @ManyToMany(() => Season, 'accounts', { owner: true, orderBy: { 'year': 'DESC' } })
+    seasons = new Collection<Season>(this);
 }

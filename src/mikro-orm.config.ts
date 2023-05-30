@@ -2,7 +2,7 @@ import { Options } from '@mikro-orm/core';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { NODE_ENV } from './common/constants';
 
-import { configDev, configProd } from 'src/config/mikro-orm';
+import { configDev, configProd } from './config/mikro-orm';
 
 let options: Options<PostgreSqlDriver>;
 
