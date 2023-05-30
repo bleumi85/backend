@@ -4,12 +4,36 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { NODE_ENV } from './common/constants';
 
+const corsLogger = new Logger('CORS');
+
+const whiteList = [];
+const regexList = [];
+
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     const configService = app.get(ConfigService);
     const PORT = configService.get<number>('port');
     const CURRENT_NODE_ENV = configService.get<string>('node_env');
+
+    app.enableCors({
+        credentials: true,
+        origin: (origin, callback) => {
+            if (origin === undefined) {
+                corsLogger.log('No origin');
+                callback(null, true);
+            } else if (whiteList.indexOf(origin) !== -1) {
+                corsLogger.log(`WhiteList: ${origin}`);
+                callback(null, true);
+            } else if (regexList.some((regex) => regex.test(origin))) {
+                corsLogger.log(`RegexList: ${origin}`);
+                callback(null, true);
+            } else {
+                corsLogger.error('Not allowed by CORS');
+                callback(new Error(`Origin ${origin} not allowed by CORS`));
+            }
+        },
+    });
 
     await app.listen(PORT, () => {
         switch (CURRENT_NODE_ENV) {
