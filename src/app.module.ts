@@ -7,9 +7,10 @@ import { AccountsModule } from './api/accounts/accounts.module';
 import { AuthModule } from './api/auth/auth.module';
 import { SeasonsModule } from './api/seasons/seasons.module';
 import { PaymentsModule } from './api/payments/payments.module';
+import { GamedaysModule } from './api/gamedays/gamedays.module';
 
 @Module({
-    imports: [CustomConfigModule, MikroOrmModule.forRoot(), AccountsModule, AuthModule, SeasonsModule, PaymentsModule],
+    imports: [CustomConfigModule, MikroOrmModule.forRoot(), AccountsModule, AuthModule, SeasonsModule, PaymentsModule, GamedaysModule],
     controllers: [AppController],
     providers: [AppService],
 })
