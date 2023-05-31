@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Account } from './entities';
 import { AccountsRepository } from './accounts.repository';
+import { Loaded } from '@mikro-orm/core';
 
 @Injectable()
 export class AccountsHelper {
@@ -21,5 +22,13 @@ export class AccountsHelper {
         return {
             account: accountRO,
         };
+    }
+
+    async getAccount(id: string): Promise<Loaded<Account | never>> {
+        try {
+            return await this.accountsRepo.findOneOrFail(id);
+        } catch {
+            throw new NotFoundException('Account not found');
+        }
     }
 }

@@ -14,28 +14,29 @@ export class Account extends DateEntity {
     [EntityRepositoryType]?: AccountsRepository;
 
     @Property()
-    @ApiProperty()
+    @ApiProperty({ description: 'First Name', example: 'Johnny' })
     firstName: string;
 
     @Property()
-    @ApiProperty()
+    @ApiProperty({ description: 'Last Name', example: 'Walker' })
     lastName: string;
 
     @Property()
     @Unique()
-    @ApiProperty()
+    @ApiProperty({ description: 'User Name', example: 'johnny.walker' })
     userName: string;
 
     @Property()
     @Unique()
-    @ApiProperty({ type: 'email' })
+    @ApiProperty({ description: 'E-Mail', format: 'email' })
     email: string;
 
     @Enum({ items: () => Role })
-    @ApiProperty({ description: `Role is one of [${Object.values(Role).join(', ')}]` })
+    @ApiProperty({ description: 'Role', enum: Object.values(Role).map((r) => r) })
     role: Role = Role.VISITOR;
 
-    @Property({ columnType: 'date', nullable: true })
+    @Property({ type: 'date', nullable: true })
+    @ApiProperty({ description: 'Expiration Date', required: false })
     expirationDate: Date;
 
     @Property({ hidden: true, nullable: true })
@@ -76,4 +77,14 @@ export class Account extends DateEntity {
 
     @OneToMany(() => Bet, (b) => b.account)
     bets = new Collection<Bet>(this);
+
+    constructor(firstName: string, lastName: string, userName: string, email: string, acceptTerms: boolean, role: Role) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.email = email;
+        this.acceptTerms = acceptTerms;
+        this.role = role;
+    }
 }

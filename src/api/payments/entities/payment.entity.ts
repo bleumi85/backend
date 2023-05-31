@@ -9,11 +9,11 @@ import { PaymentType } from '../../payment-types/entities';
 @Entity({ tableName: 'payments', customRepository: () => PaymentsRepository })
 export class Payment extends PrimaryEntity {
     @Property({ type: 'date' })
-    @ApiProperty()
+    @ApiProperty({ description: 'Booking date' })
     booked: Date;
 
     @Property({ type: 'decimal', precision: 10, scale: 2 })
-    @ApiProperty()
+    @ApiProperty({ description: 'Amount', example: '"123.45"' })
     amount: DecimalType;
 
     @ManyToOne(() => Account)
