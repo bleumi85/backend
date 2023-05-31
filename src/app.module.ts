@@ -14,14 +14,22 @@ import { BetsModule } from './api/bets/bets.module';
 import { AccountSeeder } from './seeders';
 
 @Module({
-    imports: [CustomConfigModule, MikroOrmModule.forRoot(), AccountsModule, AuthModule, SeasonsModule, PaymentsModule, GamedaysModule, SeasonGamedaysModule, BetsModule],
+    imports: [
+        CustomConfigModule,
+        MikroOrmModule.forRoot(),
+        AccountsModule,
+        AuthModule,
+        SeasonsModule,
+        PaymentsModule,
+        GamedaysModule,
+        SeasonGamedaysModule,
+        BetsModule,
+    ],
     controllers: [AppController],
     providers: [AppService],
 })
 export class AppModule implements OnModuleInit, OnModuleDestroy, NestModule {
-    constructor(
-        private readonly orm: MikroORM,
-    ) {}
+    constructor(private readonly orm: MikroORM) {}
 
     async onModuleInit() {
         await this.orm.getMigrator().up();

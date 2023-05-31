@@ -3,8 +3,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Season } from '../../seasons/entities';
 import { PrimaryEntity } from '../../../common/entities';
 
-@Entity({ tableName: 'season_places'})
-@Unique({ properties: ['season', 'place'], name: 'place_per_season_unique'})
+@Entity({ tableName: 'season_places' })
+@Unique({ properties: ['season', 'place'], name: 'place_per_season_unique' })
 export class SeasonPlace extends PrimaryEntity {
     @Property()
     @ApiProperty()

@@ -21,7 +21,7 @@ export class Gameday extends PrimaryEntity {
     @Property({ persist: false })
     @ApiProperty({ type: Boolean })
     get isGameday() {
-        return this.title.endsWith('Spieltag')
+        return this.title.endsWith('Spieltag');
     }
 
     @OneToMany(() => SeasonGameday, (sg) => sg.gameday)

@@ -5,9 +5,7 @@ export class Migration20230516112117_Create_Payment extends Migration {
         this.addSql(
             'create table "payment_types" ("id" uuid not null default gen_random_uuid(), "title" varchar(255) not null, "text_positive" varchar(255) null, "text_negative" varchar(255) null, constraint "payment_types_pkey" primary key ("id"));',
         );
-        this.addSql(
-            'alter table "payment_types" add constraint "payment_types_title_unique" unique ("title");',
-        );
+        this.addSql('alter table "payment_types" add constraint "payment_types_title_unique" unique ("title");');
 
         this.addSql(
             'create table "payments" ("id" uuid not null default gen_random_uuid(), "booked" timestamptz(0) not null, "amount" numeric(10,2) not null, "account_id" uuid not null, "payment_type_id" uuid not null, "season_id" uuid not null, constraint "payments_pkey" primary key ("id"));',

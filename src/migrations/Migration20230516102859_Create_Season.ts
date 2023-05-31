@@ -19,9 +19,7 @@ export class Migration20230516102859_Create_Season extends Migration {
     }
 
     async down(): Promise<void> {
-        this.addSql(
-            'alter table "accounts_seasons" drop constraint "accounts_seasons_season_id_foreign";',
-        );
+        this.addSql('alter table "accounts_seasons" drop constraint "accounts_seasons_season_id_foreign";');
 
         this.addSql('drop table if exists "seasons" cascade;');
 
