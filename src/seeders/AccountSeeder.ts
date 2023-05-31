@@ -23,7 +23,7 @@ export class AccountSeeder extends Seeder {
             });
         }
 
-        let n = Number(process.env.SEED_VISITORS) || 10;
+        let n = Number(process.env.SEED_VISITORS) || 0;
         const countVisitors = await em.count(Account, { role: Role.VISITOR });
         n = n - Math.min(countVisitors, n);
         const accounts = await new AccountsFactory(em).create(n, {
