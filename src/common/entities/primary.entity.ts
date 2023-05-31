@@ -5,6 +5,6 @@ import { v4 } from 'uuid';
 @Entity({ abstract: true })
 export class PrimaryEntity {
     @PrimaryKey({ type: 'uuid', defaultRaw: 'gen_random_uuid()' })
-    @ApiProperty()
+    @ApiProperty({ description: 'Unique identifier', format: 'uuid' })
     id: string = v4();
 }

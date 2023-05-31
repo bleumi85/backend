@@ -1,14 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { Account } from '../accounts/entities';
 import { AccountsRepository } from '../accounts/accounts.repository';
 import { RefreshToken } from '../refresh-tokens/entities';
+import { AuthRequest } from './dto';
+import { Role } from '../accounts/accounts.interface';
 
 @Injectable()
 export class AuthHelper {
     constructor(private readonly accountsRepo: AccountsRepository, private readonly jwt: JwtService) {}
+
+    // Check if account has admin role or if decoded id belongs to account
+    checkForAdmin(id: string, req: AuthRequest) {
+        if (id !== req.user.id && req.user.role !== Role.ADMIN) {
+            throw new ForbiddenException('Forbidden resource');
+        }
+    }
 
     // Generate JWT Token
     public async generateJwtToken(account: Account): Promise<string> {
