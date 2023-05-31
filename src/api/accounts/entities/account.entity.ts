@@ -6,6 +6,7 @@ import { Role } from '../accounts.interface';
 import { RefreshToken } from '../../refresh-tokens/entities';
 import { Season } from '../../seasons/entities';
 import { Payment } from '../../payments/entities';
+import { Bet } from '../../bets/entities';
 
 @Entity({ tableName: 'accounts', customRepository: () => AccountsRepository })
 @Unique({ properties: ['firstName', 'lastName'], name: 'accounts_full_name_unique' })
@@ -72,4 +73,7 @@ export class Account extends DateEntity {
 
     @OneToMany(() => Payment, (p) => p.account)
     payments = new Collection<Payment>(this);
+
+    @OneToMany(() => Bet, (b) => b.account)
+    bets = new Collection<Bet>(this);
 }

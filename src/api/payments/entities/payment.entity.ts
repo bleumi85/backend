@@ -12,7 +12,7 @@ export class Payment extends PrimaryEntity {
     @ApiProperty()
     booked: Date;
 
-    @Property({ type: 'decimal', precision: 10, scale: 1 })
+    @Property({ type: 'decimal', precision: 10, scale: 2 })
     @ApiProperty()
     amount: DecimalType;
 

@@ -17,7 +17,7 @@ export class Season extends PrimaryEntity {
 
     @Property({ default: false })
     @ApiProperty()
-    isActive: false;
+    isActive = false;
 
     @Property({ persist: false })
     @ApiProperty({ type: 'string' })
