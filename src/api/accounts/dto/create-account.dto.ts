@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsIn, IsNotEmpty, IsString } from "class-validator";
-import { Match } from "src/common/decorators";
+import { Match } from '../../../common/decorators';
 import { Password } from "../password.decorator";
 import { Role } from "../accounts.interface";
 
