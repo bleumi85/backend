@@ -5,6 +5,7 @@ import { Account } from '../../accounts/entities';
 import { ApiProperty } from '@nestjs/swagger';
 import { Payment } from '../../payments/entities';
 import { SeasonPlace } from '../../season-places/entities';
+import { SeasonGameday } from '../../season-gamedays/entities';
 
 @Entity({ tableName: 'seasons', customRepository: () => SeasonsRepository })
 export class Season extends PrimaryEntity {
@@ -32,4 +33,7 @@ export class Season extends PrimaryEntity {
 
     @OneToMany(() => SeasonPlace, (sp) => sp.season)
     seasonPlaces = new Collection<SeasonPlace>(this);
+
+    @OneToMany(() => SeasonGameday, (sg) => sg.season)
+    seasonGamedays = new Collection<SeasonGameday>(this);
 }

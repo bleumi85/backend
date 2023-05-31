@@ -2,6 +2,7 @@ import { Collection, Entity, EntityRepositoryType, OneToMany, Property, Unique }
 import { GamedaysRepository } from '../gamedays.repository';
 import { ApiProperty } from '@nestjs/swagger';
 import { PrimaryEntity } from '../../../common/entities';
+import { SeasonGameday } from '../../season-gamedays/entities';
 
 @Entity({ tableName: 'gamedays', customRepository: () => GamedaysRepository })
 export class Gameday extends PrimaryEntity {
@@ -22,4 +23,7 @@ export class Gameday extends PrimaryEntity {
     get isGameday() {
         return this.title.endsWith('Spieltag')
     }
+
+    @OneToMany(() => SeasonGameday, (sg) => sg.gameday)
+    seasonGamedays = new Collection<SeasonGameday>(this);
 }
